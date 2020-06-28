@@ -1,13 +1,16 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace GeminiSkyFileMigrationTool
 {
     class FileMigration
     {
-        static int moved = 0;
+        static List<string> moved = new List<string>();
+        static List<string> unableToMoveWithFilter = new List<string>();
+
         static int unableToMove = 0;
-        
+
         public static string SourcePath { get; set; }
         public static string DestinationPath { get; set; }
         public static string Filter { get; set; }
@@ -42,8 +45,15 @@ namespace GeminiSkyFileMigrationTool
                 }
                 if (!File.Exists(destination))
                 {
-                    File.Move(path, destination, true);
-                    moved++;
+                    try
+                    {
+                        File.Move(path, destination, true);
+                        moved.Add(path);
+                    }
+                    catch
+                    {
+                        unableToMoveWithFilter.Add(path);
+                    }
                 }
             }
             else
@@ -54,13 +64,22 @@ namespace GeminiSkyFileMigrationTool
 
         public static void ScanComplete()
         {
-            if (moved > 0)
+            if (moved.Count > 0)
             {
-                Console.WriteLine($"Moved {moved} files from {SourcePath} to {DestinationPath}.");
+                Console.WriteLine($"Moved {moved.Count} files from {SourcePath} to {DestinationPath}.\n\n");
             }
             if (unableToMove > 0)
             {
-                Console.WriteLine($"Unable to move {unableToMove} files from {SourcePath} to {DestinationPath}.");
+                Console.WriteLine($"Unable to move {unableToMove + unableToMoveWithFilter.Count} files from {SourcePath} to {DestinationPath}.\n\n");
+            }
+            if (unableToMoveWithFilter.Count > 0)
+            {
+                Console.WriteLine($"Unable to move {unableToMoveWithFilter.Count} files with {Filter} filter: ");
+
+                foreach (string s in unableToMoveWithFilter)
+                {
+                    Console.WriteLine($"\r{s}");
+                }
             }
             Console.WriteLine("\n\n\rScan complete...");
         }
