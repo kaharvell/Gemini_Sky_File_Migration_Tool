@@ -16,6 +16,6 @@ Filter is search parameter, in this context it will be the file extension.
   
 
 If the file is protected, or requires additional permissions, or if a path does not exist as a source path, or is not reachable as a destination path,
-  the application will exit without migrating.
+  the application will log the files containing the filter that were not moved due to exception handling.
   
 Future implementation will include GUI, additional filters prior to program execution, and ability to extract directly from zip files with filter parameters.
