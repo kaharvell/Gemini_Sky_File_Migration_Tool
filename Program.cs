@@ -11,28 +11,26 @@ class Program
 
         Console.Write("Enter the source path: ");
         string sourcePath = Console.ReadLine();
-        Console.WriteLine(sourcePath);
 
         Console.Write("\n\nEnter the destination path: ");
         string destinationPath = Console.ReadLine();
-        Console.WriteLine(destinationPath);
 
         Console.Write("\n\nEnter the filter: ");
         string filter = Console.ReadLine();
-        Console.WriteLine(filter);
 
-        Console.Write($"\n\nMigrate {filter} files from {sourcePath} to {destinationPath}? Y/N: ");
+        Console.Write($"\n\nMigrate {filter} files from {sourcePath} to {destinationPath}?\n\n\tY/N: ");
         string input = Console.ReadLine();
+        
+        Console.WriteLine();
 
         if (input.ToLower() != "y")
         {
+            Console.Clear();
             goto Start;
         }
         else
         {
             new FileMigration(sourcePath, destinationPath, filter);
-
-            Console.WriteLine($"\n{FileMigration.SourcePath}, {FileMigration.DestinationPath}, {FileMigration.Filter}\n\n");
 
             string[] path = { FileMigration.SourcePath };
 
@@ -52,7 +50,6 @@ class Program
                 }
             }
         }
-
         FileMigration.ScanComplete();
     }
 }
