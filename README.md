@@ -12,10 +12,9 @@ Destination path is the folder the files will be moved to. If this path does not
   
 Filter is search parameter, in this context it will be the file extension.
   I.E. If we input ".svg", the console app will scan all files and subfolders for files that end with ".svg", then move them to the destination path.
-  
-  
 
 If the file is protected, or requires additional permissions, or if a path does not exist as a source path, or is not reachable as a destination path,
   the application will log the files containing the filter that were not moved due to exception handling.
-  
+
+## TODO
 Future implementation will include GUI, additional filters prior to program execution, and ability to extract directly from zip files with filter parameters.
